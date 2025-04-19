@@ -1,0 +1,73 @@
+BASE DE DATOS:
+¡Claro! Aquí tienes una propuesta de base de datos para una página web de una cafetería con 9 tablas, diseñada para cubrir las funcionalidades esenciales y algunas adicionales para una gestión más completa.
+
+Nota: Esta es una estructura lógica. Los tipos de datos específicos (VARCHAR, INT, DECIMAL, DATE, etc.) y las restricciones (NOT NULL, UNIQUE, PRIMARY KEY, FOREIGN KEY) deberán definirse según el sistema de gestión de bases de datos que utilices (MySQL, PostgreSQL, etc.) y las necesidades exactas de tu aplicación.
+
+Tablas:
+
+Clientes: Almacena la información de los clientes registrados.
+
+cliente_id (INT, PRIMARY KEY, AUTO_INCREMENT)
+nombre (VARCHAR(100), NOT NULL)
+apellido (VARCHAR(100), NOT NULL)
+email (VARCHAR(100), UNIQUE, NOT NULL)
+telefono (VARCHAR(20))   
+direccion (VARCHAR(255))
+fecha_registro (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
+
+Productos: Contiene la información de los productos que ofrece la cafetería.
+
+producto_id (INT, PRIMARY KEY, AUTO_INCREMENT)
+nombre (VARCHAR(100), UNIQUE, NOT NULL)
+descripcion (TEXT)
+precio (DECIMAL(10, 2), NOT NULL)
+imagen_url (VARCHAR(255))
+categoria_id (INT, FOREIGN KEY Categorias(categoria_id))
+
+Categorias: Define las categorías de los productos (ej. café, postres, bebidas frías).
+
+categoria_id (INT, PRIMARY KEY, AUTO_INCREMENT)
+nombre (VARCHAR(50), UNIQUE, NOT NULL)
+
+Pedidos: Registra la información de cada pedido realizado.
+
+pedido_id (INT, PRIMARY KEY, AUTO_INCREMENT)
+cliente_id (INT, FOREIGN KEY Clientes(cliente_id))
+fecha_pedido (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
+estado_pedido (VARCHAR(50), DEFAULT 'Pendiente') -- Ej: Pendiente, En preparación, Listo para recoger, Entregado
+total (DECIMAL(10, 2), NOT NULL)
+metodo_pago (VARCHAR(50))
+
+DetallesPedido: Almacena los detalles de cada producto incluido en un pedido.
+
+detalle_id (INT, PRIMARY KEY, AUTO_INCREMENT)
+pedido_id (INT, FOREIGN KEY Pedidos(pedido_id))
+producto_id (INT, FOREIGN KEY Productos(producto_id))
+cantidad (INT, NOT NULL, DEFAULT 1)
+precio_unitario (DECIMAL(10, 2), NOT NULL) -- Precio del producto al momento del pedido
+subtotal (DECIMAL(10, 2), NOT NULL)
+
+Empleados: Contiene la información de los empleados de la cafetería (opcional, pero útil para gestión interna).
+
+empleado_id (INT, PRIMARY KEY, AUTO_INCREMENT)
+nombre (VARCHAR(100), NOT NULL)
+apellido (VARCHAR(100), NOT NULL)
+email (VARCHAR(100), UNIQUE)   
+telefono (VARCHAR(20))
+rol (VARCHAR(50)) -- Ej: Barista, Cajero, Administrador
+
+Horarios: Define los horarios de atención de la cafetería.
+
+horario_id (INT, PRIMARY KEY, AUTO_INCREMENT)
+dia_semana (VARCHAR(20), NOT NULL) -- Ej: Lunes, Martes, ...
+hora_inicio (TIME)
+hora_fin (TIME)
+
+Promociones: Almacena información sobre las promociones o descuentos ofrecidos.
+
+promocion_id (INT, PRIMARY KEY, AUTO_INCREMENT)
+nombre (VARCHAR(100), NOT NULL)
+descripcion (TEXT)
+codigo (VARCHAR(20), UNIQUE)
+tipo_descuento (VARCHAR(20)) -- Ej: Porcentaje, Monto fijo
+val
